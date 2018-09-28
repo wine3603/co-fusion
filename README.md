@@ -23,7 +23,25 @@ The script `Scripts/install.sh` shows step-by-step how Co-Fusion is build. A pyt
 
 ## Dataset and evaluation tools
 
-We are going to release testing-data and dataset tools after coming back from ICRA (June 2017). Stay tuned!
+### Tools
+* Recorder for klg files: https://github.com/mp3guy/Logger2
+* Viewer for klg files: https://github.com/mp3guy/LogView
+* Images -> klg converter: https://github.com/martinruenz/dataset-tools/tree/master/convert_imagesToKlg
+* klg -> images/pointclouds: https://github.com/martinruenz/dataset-tools/tree/master/convert_klg
+* Evaluate segmentation (intersection-over-union): https://github.com/martinruenz/dataset-tools/tree/master/evaluate_segmentation
+* Automated evaluation of Co-Fusion: https://github.com/martinruenz/dataset-tools/tree/master/automatisation
+* Scripts to create synthetic datasets with blender: https://github.com/martinruenz/dataset-tools/tree/master/blender
+
+### Synthetic sequences:
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/car4-noise.klg
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/car4-full.tar.gz
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/room4-noise.klg
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/room4-full.tar.gz
+
+### Real (Asus Xtion) sequences, in [klg](https://github.com/mp3guy/LogView) format:
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/teddy-handover.klg
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/sliding-clock.klg
+* http://visual.cs.ucl.ac.uk/pubs/cofusion/data/place-items.klg
 
 ## Hardware
 
@@ -37,3 +55,31 @@ The code-formatting rules for this project are defined `.clang-format`. Run:
 
 ## ElasticFusion
 The overall architecture and terminal-interface of Co-Fusion is based on [ElasticFusion](https://github.com/mp3guy/ElasticFusion) and the ElasticFusion [readme file](https://github.com/mp3guy/ElasticFusion/blob/master/README.md) contains further useful information.
+
+## New command line parameters (see [source-file](https://github.com/martinruenz/co-fusion/blob/master/GUI/MainController.cpp#L29-L90))
+
+* **-run**:           Run dataset immediately (otherwise start paused).
+* **-static**:        Disable multi-model fusion.
+* **-confO**:         Initial surfel confidence threshold for objects (default 0.01).
+* **-confG**:         Initial surfel confidence threshold for scene (default 10.00).
+* **-segMinNew**:     Min size of new object segments (relative to image size)
+* **-segMaxNew**:     Max size of new object segments (relative to image size)
+* **-offset**:        Offset between creating models
+* **-keep**:          Keep all models (even bad, deactivated)
+* **-dir**:           Processes a log-directory (Default: Color####.png + Depth####.exr [+ Mask####.png])
+* **-depthdir**:      Separate depth directory (==dir if not provided)
+* **-maskdir**:       Separate mask directory (==dir if not provided)
+* **-exportdir**:     Export results to this directory, otherwise not exported
+* **-basedir**:       Treat the above paths relative to this one (like depthdir = basedir + depthdir, default "")
+* **-colorprefix**:   Specify prefix of color files (=="" or =="Color" if not provided)
+* **-depthprefix**:   Specify prefix of depth files (=="" or =="Depth" if not provided)
+* **-maskprefix**:    Specify prefix of mask files (=="" or =="Mask" if not provided)
+* **-indexW**:        Number of digits of the indexes (==4 if not provided)
+* **-nm**:            Ignore Mask####.png images as soon as the provided frame was reached.
+* **-es**:            Export segmentation
+* **-ev**:            Export viewport images
+* **-el**:            Export label images
+* **-em**:            Export models (point-cloud)
+* **-en**:            Export normal images
+* **-ep**:            Export poses after finishing run (just before quitting if '-q')
+* **-or**:            Outlier rejection strength (default 3).
